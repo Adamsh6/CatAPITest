@@ -1,0 +1,9 @@
+.ImageContainer {
+  width: 25%;
+  height: 25vh;
+  padding: 1rem;
+}
+
+.ImageContainer > img {
+  height: 100%;
+}
