@@ -8,10 +8,10 @@ import "./css/ImageContainer.css";
 
 const ImageContainer = (props) => {
   const handleUpVote = () => {
-    console.log("UP Vote");
+    props.handleUpVote(props.imageData.id);
   };
   const handleDownVote = () => {
-    console.log("Down Vote");
+    props.handleDownVote(props.imageData.id);
   };
   return (
     <div className="ImageContainer">
@@ -21,7 +21,7 @@ const ImageContainer = (props) => {
         handleUpVote={handleUpVote}
         handleDownVote={handleDownVote}
       />
-      <VoteCount />
+      <VoteCount score={props.score} />
     </div>
   );
 };

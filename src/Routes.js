@@ -1,4 +1,3 @@
-import { render } from "@testing-library/react";
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -8,16 +7,17 @@ import {
 } from "react-router-dom";
 import UploadContainer from "./UploadPage/UploadContainer";
 import HomeContainer from "./HomePage/HomeContainer";
+import api from "./api";
 
 const Routes = () => {
   return (
     <Router>
       <Switch>
         <Route exact path="/">
-          <HomeContainer />
+          <HomeContainer api={api} />
         </Route>
         <Route path="/upload">
-          <UploadContainer />
+          <UploadContainer api={api} />
         </Route>
         <Route path="/">
           <Redirect to="/" />

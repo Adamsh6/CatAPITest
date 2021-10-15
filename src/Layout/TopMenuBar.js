@@ -7,8 +7,8 @@ const TopMenuBar = () => {
   return (
     <div className="TopMenuBar">
       <h1>RATE A CAT</h1>
-      <Icon name="picture" />
-      <Icon name="upload" />
+      <Icon name="picture" size="big" />
+      <Icon name="upload" size="big" />
     </div>
   );
 };

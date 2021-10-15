@@ -4,9 +4,9 @@ import { Button, Icon } from "semantic-ui-react";
 const FavouriteButton = (props) => {
   return (
     <div>
-      <Button onClick={props.handleDownVote}>
+      <button onClick={props.handleToggleFavourite}>
         <Icon name="heart outline" />
-      </Button>
+      </button>
     </div>
   );
 };
