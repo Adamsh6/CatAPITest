@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import api from "../api";
 import ImageContainer from "./ImageContainer";
 
 const HomeContainer = (props) => {
@@ -10,13 +11,13 @@ const HomeContainer = (props) => {
     props.api.getImages(currentPage).then((response) => {
       setImagesData(response);
     });
-  }, [currentPage]);
+  }, [currentPage, props.api]);
 
   useEffect(() => {
     props.api.getVotes().then((response) => {
       setScoreData(response);
     });
-  }, []);
+  }, [props.api]);
 
   const handleUpVote = (id) => {
     props.api.incrementVote(id, true);
@@ -34,6 +35,8 @@ const HomeContainer = (props) => {
         handleDownVote={handleDownVote}
         handleUpVote={handleUpVote}
         score={scoreData[imageData.id] || 0}
+        removeFavourite={props.api.removeFavourite}
+        setFavourite={props.api.setFavourite}
       />
     ));
   };

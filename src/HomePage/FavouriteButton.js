@@ -5,7 +5,10 @@ const FavouriteButton = (props) => {
   return (
     <div>
       <button onClick={props.handleToggleFavourite}>
-        <Icon name="heart outline" />
+        <Icon
+          name={props.isFavourite ? "heart" : "heart outline"}
+          colour="red"
+        />
       </button>
     </div>
   );
