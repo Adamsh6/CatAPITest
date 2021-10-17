@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import api from "../api";
+import PropTypes from "prop-types";
 import ImageContainer from "./ImageContainer";
+import { Loader } from "semantic-ui-react";
+import "./css/HomeContainer.css";
 
 const HomeContainer = (props) => {
   const [imagesData, setImagesData] = useState(undefined);
@@ -43,9 +45,22 @@ const HomeContainer = (props) => {
 
   return (
     <div className="HomeContainer">
-      {imagesData && scoreData && imageList(imagesData, scoreData)}
+      <Loader active={!imagesData || !scoreData} />
+      <div className="image-list">
+        {imagesData && scoreData && imageList(imagesData, scoreData)}
+      </div>
     </div>
   );
 };
 
 export default HomeContainer;
+
+HomeContainer.propTypes = {
+  api: PropTypes.shape({
+    getImages: PropTypes.func.isRequired,
+    getVotes: PropTypes.func.isRequired,
+    removeFavourite: PropTypes.func.isRequired,
+    setFavourite: PropTypes.func.isRequired,
+    incrementVote: PropTypes.func.isRequired,
+  }),
+};

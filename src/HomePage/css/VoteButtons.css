@@ -1,0 +1,9 @@
+.VoteButtons {
+  margin: auto;
+  margin: 1rem auto;
+}
+
+.VoteButtons .ui.button {
+  margin-right: 0.1rem;
+  margin-left: 0.1rem;
+}

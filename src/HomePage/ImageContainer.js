@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import VoteButtons from "./VoteButtons";
 import VoteCount from "./VoteCount";
 import FavouriteButton from "./FavouriteButton";
+import { Image } from "semantic-ui-react";
 import "./css/ImageContainer.css";
 
 const ImageContainer = (props) => {
@@ -16,6 +18,7 @@ const ImageContainer = (props) => {
     }
     setScore(props.score);
   }, [props.imageData, props.score]);
+
   const handleUpVote = () => {
     props.handleUpVote(props.imageData.id);
   };
@@ -44,14 +47,26 @@ const ImageContainer = (props) => {
         isFavourite={isFavourite}
         handleToggleFavourite={handleToggleFavourite}
       />
-      <img src={props.imageData.url} alt="cat" className="catImage" />
+
+      <div className="image">
+        <img src={props.imageData.url} alt="cat" className="catImage" />
+      </div>
+      <VoteCount score={score} />
       <VoteButtons
         handleUpVote={handleUpVote}
         handleDownVote={handleDownVote}
       />
-      <VoteCount score={score} />
     </div>
   );
 };
 
 export default ImageContainer;
+
+ImageContainer.propTypes = {
+  imageData: PropTypes.object.isRequired,
+  score: PropTypes.number.isRequired,
+  removeFavourite: PropTypes.func.isRequired,
+  setFavourite: PropTypes.func.isRequired,
+  handleDownVote: PropTypes.func.isRequired,
+  handleUpVote: PropTypes.func.isRequired,
+};

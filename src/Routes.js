@@ -5,6 +5,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import TopMenuBar from "./Layout/TopMenuBar";
 import UploadContainer from "./UploadPage/UploadContainer";
 import HomeContainer from "./HomePage/HomeContainer";
 import api from "./api";
@@ -12,6 +13,7 @@ import api from "./api";
 const Routes = () => {
   return (
     <Router>
+      <TopMenuBar />
       <Switch>
         <Route exact path="/">
           <HomeContainer api={api} />

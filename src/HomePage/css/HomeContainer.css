@@ -1,0 +1,10 @@
+.HomeContainer {
+  padding-left: 15%;
+  padding-right: 15%;
+}
+
+.HomeContainer > .image-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}

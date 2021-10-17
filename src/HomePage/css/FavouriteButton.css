@@ -1,0 +1,18 @@
+.FavouriteButton {
+  float: right;
+}
+
+.FavouriteButton button {
+  padding: unset;
+  background: unset;
+  border: unset;
+  color: red;
+}
+
+.FavouriteButton button i:hover {
+  border-radius: 100%;
+  cursor: pointer;
+  background: lightgrey;
+  border: unset;
+  color: tomato;
+}

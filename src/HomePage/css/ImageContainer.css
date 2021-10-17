@@ -1,9 +1,19 @@
 .ImageContainer {
-  width: 25%;
-  height: 25vh;
-  padding: 1rem;
+  width: 17vw;
+  height: 20vw;
+  border: 1px black solid;
+  border-radius: 5%;
+  margin: 1rem 0rem;
 }
 
-.ImageContainer > img {
-  height: 100%;
+.ImageContainer .image {
+  width: 80%;
+  height: 68%;
+  padding-top: 10%;
+  margin: auto;
+}
+
+.ImageContainer .image img {
+  max-height: 100%;
+  max-width: 100%;
 }

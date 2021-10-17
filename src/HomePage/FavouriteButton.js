@@ -1,13 +1,15 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Button, Icon } from "semantic-ui-react";
+import "./css/FavouriteButton.css";
 
 const FavouriteButton = (props) => {
   return (
-    <div>
+    <div className="FavouriteButton">
       <button onClick={props.handleToggleFavourite}>
         <Icon
           name={props.isFavourite ? "heart" : "heart outline"}
-          colour="red"
+          size="large"
         />
       </button>
     </div>
@@ -15,3 +17,8 @@ const FavouriteButton = (props) => {
 };
 
 export default FavouriteButton;
+
+FavouriteButton.propTypes = {
+  handleToggleFavourite: PropTypes.func.isRequired,
+  isFavourite: PropTypes.bool.isRequired,
+};
