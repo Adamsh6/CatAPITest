@@ -1,10 +1,47 @@
 .HomeContainer {
-  padding-left: 15%;
-  padding-right: 15%;
+  padding-left: 12%;
+  padding-right: 12%;
 }
 
 .HomeContainer > .image-list {
+  margin: auto;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
+  max-width: 70rem;
 }
+
+/* @media only screen and (min-width: 1200) {
+  .HomeContainer {
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .HomeContainer {
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .HomeContainer {
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .HomeContainer {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .HomeContainer {
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+} */

@@ -74,7 +74,7 @@ const getOnePageOfVotes = async (page, init) => {
   return responseData;
 };
 
-const uploadImage = (file) => {
+const uploadImage = async (file) => {
   const headers = { "x-api-key": apiKey };
   let uploadForm = new FormData();
   uploadForm.append("file", file);
@@ -85,9 +85,29 @@ const uploadImage = (file) => {
     body: uploadForm,
   };
 
-  fetch(baseUrl + "images/upload", init).then((response) =>
-    console.log(response)
-  );
+  let apiResponse = {
+    isSuccessful: false,
+    message: "",
+  };
+
+  await fetch(baseUrl + "images/upload", init)
+    .then((response) => response.json())
+    .then((response) => {
+      console.log(response);
+      if (response.approved === 1) {
+        apiResponse.isSuccessful = true;
+        apiResponse.message = "Upload Successful";
+      } else {
+        apiResponse.message = `Error uploading this image - ${response.message}`;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      apiResponse.message = `Something went wrong uploading this image - ${err.message}`;
+    });
+
+  console.log(apiResponse);
+  return apiResponse;
 };
 
 const setFavourite = async (id) => {
@@ -108,7 +128,6 @@ const setFavourite = async (id) => {
     .then((response) => {
       console.log(response);
       if (response.message === "SUCCESS") {
-        // console.log(response.body.message);
         apiResponse.isSuccessful = true;
         apiResponse.message = "Favourite successfully removed";
         apiResponse.favouriteId = response.id;

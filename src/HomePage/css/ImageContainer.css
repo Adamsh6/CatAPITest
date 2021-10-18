@@ -1,9 +1,9 @@
 .ImageContainer {
-  width: 17vw;
-  height: 20vw;
+  width: 15rem;
+  height: 20rem;
   border: 1px black solid;
   border-radius: 5%;
-  margin: 1rem 0rem;
+  margin: 1rem 1rem;
 }
 
 .ImageContainer .image {
