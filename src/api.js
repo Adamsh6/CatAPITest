@@ -2,13 +2,14 @@ const baseUrl = "https://api.thecatapi.com/v1/";
 const apiKey = process.env.REACT_APP_CAT_API_KEY || "";
 const headers = { "x-api-key": apiKey, "Content-type": "application/json" };
 
-const getImages = async () => {
+const getImages = async (page, pageLimit) => {
   let url = new URL(baseUrl + "images");
 
   const params = {
-    limit: "16",
+    limit: pageLimit,
     include_favourite: 1,
     sub_id: "1",
+    page: page,
   };
 
   url.search = new URLSearchParams(params).toString();
@@ -17,11 +18,26 @@ const getImages = async () => {
     method: "GET",
     headers: headers,
   };
-  let responseData;
-  await fetch(url.toString(), init).then((response) => {
-    responseData = response.json();
-  });
-  return responseData;
+
+  let apiResponse = {
+    isSuccessful: false,
+    message: "",
+  };
+
+  await fetch(url.toString(), init)
+    .then((response) => response.json())
+    .then((response) => {
+      if (Array.isArray(response)) {
+        apiResponse.isSuccessful = true;
+        apiResponse.message = "Images successfully retrieved";
+        apiResponse.data = response;
+      } else {
+        apiResponse.message =
+          "Something went wrong retrieving images, please try again at a later time";
+      }
+    });
+
+  return apiResponse;
 };
 
 const getVotes = async () => {
@@ -34,31 +50,48 @@ const getVotes = async () => {
   let hasMorePages = true;
   let currentPage = 0;
 
+  let callHasFailed = false;
+  let apiResponse = {
+    isSuccessful: false,
+    message: "",
+  };
+
   while (hasMorePages) {
     let currentResponseData = [];
     await getOnePageOfVotes(currentPage, init).then((response) => {
       currentResponseData = response;
     });
-    if (currentResponseData.length > 0) {
-      responseData = [...responseData, ...currentResponseData];
-      currentPage++;
+    if (currentResponseData) {
+      if (currentResponseData.length > 0) {
+        responseData = [...responseData, ...currentResponseData];
+        currentPage++;
+      } else {
+        hasMorePages = false;
+      }
     } else {
       hasMorePages = false;
+      callHasFailed = true;
     }
   }
+  if (!callHasFailed) {
+    apiResponse.isSuccessful = true;
+    apiResponse.message = "Successfully retrieved vote data";
+    apiResponse.data = responseData.reduce((acc, voteData) => {
+      let voteValue = voteData.value === 0 ? -1 : 1;
+      if (acc[voteData.image_id]) {
+        acc[voteData.image_id] += voteValue;
+      } else {
+        acc[voteData.image_id] = voteValue;
+      }
 
-  const votesMap = responseData.reduce((acc, voteData) => {
-    let voteValue = voteData.value === 0 ? -1 : 1;
-    if (acc[voteData.image_id]) {
-      acc[voteData.image_id] += voteValue;
-    } else {
-      acc[voteData.image_id] = voteValue;
-    }
+      return acc;
+    }, {});
+  } else {
+    apiResponse.message =
+      "Something has gone wrong collecting the vote data. Please try again at a later time";
+  }
 
-    return acc;
-  }, {});
-
-  return votesMap;
+  return apiResponse;
 };
 
 const getOnePageOfVotes = async (page, init) => {
@@ -68,9 +101,15 @@ const getOnePageOfVotes = async (page, init) => {
   const params = { page: page };
 
   url.search = new URLSearchParams(params).toString();
-  await fetch(url.toString(), init).then((response) => {
-    responseData = response.json();
-  });
+  await fetch(url.toString(), init)
+    .then((response) => response.json())
+    .then((response) => {
+      if (Array.isArray(response)) {
+        responseData = response;
+      } else {
+        responseData = undefined;
+      }
+    });
   return responseData;
 };
 
@@ -175,7 +214,7 @@ const removeFavourite = async (id) => {
   return apiResponse;
 };
 
-const incrementVote = (id, isVoteUp) => {
+const incrementVote = async (id, isVoteUp) => {
   const init = {
     method: "POST",
     headers: headers,
@@ -186,7 +225,27 @@ const incrementVote = (id, isVoteUp) => {
     }),
   };
 
-  fetch(baseUrl + "votes", init).then((response) => console.log(response));
+  let apiResponse = { isSuccessful: false, message: "" };
+
+  await fetch(baseUrl + "votes", init)
+    .then((response) => response.json())
+    .then((response) => {
+      console.log(response);
+      if (response.message === "SUCCESS") {
+        apiResponse.isSuccessful = true;
+        apiResponse.message = "Vote successfully applied";
+      } else {
+        apiResponse.message =
+          "Something went wrong with applying this vote, please try again at a later time";
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      apiResponse.message =
+        "Something went wrong with applying this vote, please try again at a later time";
+    });
+
+  return apiResponse;
 };
 
 const api = {

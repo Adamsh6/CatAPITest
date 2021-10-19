@@ -2,15 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button } from "semantic-ui-react";
 
-import "./css/PaginationButtons.css";
-
 const PaginationButtons = (props) => {
+  const handleBackPage = () => {
+    props.setCurrentPage(props.page - 1);
+  };
+  const handleNextPage = () => {
+    props.setCurrentPage(props.page + 1);
+  };
   return (
     <div className="PaginationButtons">
-      <Button onClick={props.handleBackPage} disabled={props.page === 0}>
+      <Button onClick={handleBackPage} disabled={props.page === 0}>
         Back
       </Button>
-      <Button onClick={props.handleNextPage} disabled={props.page === lastPage}>
+      <Button onClick={handleNextPage} disabled={props.isLastPage}>
         Next
       </Button>
     </div>
@@ -23,5 +27,5 @@ PaginationButtons.propTypes = {
   handleUpVote: PropTypes.func.isRequired,
   handleDownVote: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
-  lastPage: PropTypes.number,
+  isLastPage: PropTypes.bool.isRequired,
 };

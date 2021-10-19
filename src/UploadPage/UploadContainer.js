@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Input, Message, Loader } from "semantic-ui-react";
+import { Button, Message, Loader } from "semantic-ui-react";
 import { withRouter, useHistory } from "react-router-dom";
 
 import "./UploadContainer.css";
@@ -15,15 +15,27 @@ const UploadContainer = (props) => {
   const handleUpload = async (files) => {
     setErrorMessage(undefined);
     setLoading(true);
-    console.log(files[0]);
-    await props.api.uploadImage(files[0]).then((response) => {
-      if (!response.isSuccessful) {
-        setErrorMessage(response.message);
-      } else {
-        history.push("/home");
-      }
-    });
-    setLoading(false);
+    const file = files[0];
+    if (isFileImage(file)) {
+      console.log(files[0]);
+      await props.api.uploadImage(file).then((response) => {
+        if (!response.isSuccessful) {
+          setErrorMessage(response.message);
+          setLoading(false);
+        } else {
+          history.push("/home");
+        }
+      });
+    } else {
+      setErrorMessage(
+        "Invalid File Type: Please ensure the file is an image and try again"
+      );
+      setLoading(false);
+    }
+  };
+
+  const isFileImage = (file) => {
+    return file && file["type"].split("/")[0] === "image";
   };
 
   return (
