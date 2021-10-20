@@ -16,7 +16,6 @@ const HomeContainer = (props) => {
   useEffect(() => {
     setErrorMessage(undefined);
     props.api.getImages(currentPage, pageLimit).then((response) => {
-      console.log(response);
       if (response.isSuccessful) {
         setImagesData(response.data);
       } else {
@@ -28,7 +27,6 @@ const HomeContainer = (props) => {
   useEffect(() => {
     setErrorMessage(undefined);
     props.api.getVotes().then((response) => {
-      console.log(response);
       if (response.isSuccessful) {
         setScoreData(response.data);
       } else {

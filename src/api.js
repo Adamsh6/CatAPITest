@@ -27,6 +27,7 @@ const getImages = async (page, pageLimit) => {
   await fetch(url.toString(), init)
     .then((response) => response.json())
     .then((response) => {
+      console.log(response);
       if (Array.isArray(response)) {
         apiResponse.isSuccessful = true;
         apiResponse.message = "Images successfully retrieved";
@@ -35,8 +36,14 @@ const getImages = async (page, pageLimit) => {
         apiResponse.message =
           "Something went wrong retrieving images, please try again at a later time";
       }
+    })
+    .catch((err) => {
+      console.log(err);
+      apiResponse.message =
+        "Something went wrong retrieving images, please try again at a later time";
     });
 
+  console.log(apiResponse);
   return apiResponse;
 };
 
@@ -90,7 +97,7 @@ const getVotes = async () => {
     apiResponse.message =
       "Something has gone wrong collecting the vote data. Please try again at a later time";
   }
-
+  console.log(apiResponse);
   return apiResponse;
 };
 
@@ -109,6 +116,10 @@ const getOnePageOfVotes = async (page, init) => {
       } else {
         responseData = undefined;
       }
+    })
+    .catch((err) => {
+      console.log(err);
+      responseData = undefined;
     });
   return responseData;
 };
@@ -195,9 +206,8 @@ const removeFavourite = async (id) => {
   await fetch(baseUrl + "favourites/" + id, init)
     .then((response) => response.json())
     .then((response) => {
-      console.log(response.body);
+      console.log(response);
       if (response.message === "SUCCESS") {
-        console.log(response.message);
         apiResponse.isSuccessful = true;
         apiResponse.message = "Favourite successfully removed";
       } else {
