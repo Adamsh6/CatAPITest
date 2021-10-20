@@ -221,7 +221,6 @@ const incrementVote = async (id, isVoteUp) => {
     body: JSON.stringify({
       image_id: id,
       value: isVoteUp ? 1 : 0,
-      sub_id: "1",
     }),
   };
 

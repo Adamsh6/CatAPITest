@@ -24,8 +24,7 @@ const PaginationButtons = (props) => {
 export default PaginationButtons;
 
 PaginationButtons.propTypes = {
-  handleUpVote: PropTypes.func.isRequired,
-  handleDownVote: PropTypes.func.isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   isLastPage: PropTypes.bool.isRequired,
 };
