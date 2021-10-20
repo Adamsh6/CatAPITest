@@ -17,7 +17,6 @@ const UploadContainer = (props) => {
     setLoading(true);
     const file = files[0];
     if (isFileImage(file)) {
-      console.log(files[0]);
       await props.api.uploadImage(file).then((response) => {
         if (!response.isSuccessful) {
           setErrorMessage(response.message);

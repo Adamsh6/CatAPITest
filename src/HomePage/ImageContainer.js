@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import VoteButtons from "./VoteButtons";
 import VoteCount from "./VoteCount";
 import FavouriteButton from "./FavouriteButton";
-import { Image } from "semantic-ui-react";
 import "./css/ImageContainer.css";
 
 const ImageContainer = (props) => {
